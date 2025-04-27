@@ -6,7 +6,7 @@ import './App.css';
 
 function App() {
   return (
-    <Router basename="/WEB2_PokeReactApp/hiros-pokedex">
+    <Router basename="/WEB2_PokeReactApp/hiros-pokedex/">
       <nav>
         <Link className="nav-link" to="/">Pokedex</Link>  
         <Link className="nav-link" to="/about">About</Link>
