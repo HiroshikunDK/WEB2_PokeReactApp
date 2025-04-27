@@ -46,12 +46,14 @@ function Pokedex() {
   const limit = 21;
   const [allTypes, setAllTypes] = useState([]);
   const [selectedType, setSelectedType] = useState('all');
+  const [selectedResistance, setSselectedResistance] = useState('none');
+  const [selectedWeakness, setSelectedWeakness] = useState('none');
 
   useEffect(() => {
     const fetchData = async () => {
       console.log("Selected Type:", selectedType);
       let res;
-      if (selectedType !== 'all') {
+      if (selectedType !== 'all' || selectedResistance !== 'none' || selectedWeakness !== 'none') {
         // Fetch data from type endpoint
         res = await fetch(`https://pokeapi.co/api/v2/type/${selectedType}`);
         if (!res.ok) {
@@ -67,7 +69,8 @@ function Pokedex() {
         const detailedData = await fetchPokemonDetails(pokemonUrls, page, limit);
         console.log("Hello wolrd! 1,3");
         setPokemonList(detailedData);
-      } else {
+      } 
+      else {
         // Fetch data from the generic Pokémon endpoint when 'all' is selected
         res = await fetch(`https://pokeapi.co/api/v2/pokemon?offset=${page * limit}&limit=${limit}`);
         if (!res.ok) {
@@ -82,7 +85,7 @@ function Pokedex() {
     };
   
     fetchData();
-  }, [page, selectedType]);
+  }, [page, selectedType, selectedResistance, selectedWeakness]);
 
  // Get the list of all types
 useEffect(() => {
@@ -94,10 +97,10 @@ useEffect(() => {
 }, []); // Run once on mount
 
   return (
-    <div>
+    <div >
       {/* Title */}
       <h1>Pokédex</h1>
-      
+      <div className="filter-container">
       {/* Filter by Type */}
       <div className="filter-bar">
         <label htmlFor="typeFilter">Filter by Type: </label>
@@ -114,7 +117,41 @@ useEffect(() => {
           ))}
         </select>
       </div>
-            
+
+       {/* Filter by Weakness */}
+       <div className="filter-bar">
+        <label htmlFor="weaknessFilter">Filter by Weakness: </label>
+        <select 
+          id="weaknessFilter" 
+          value={selectedWeakness} 
+          onChange={(e) => setSelectedWeakness(e.target.value)}
+        >
+          <option value="all">All Weaknesses</option>
+          {allTypes.map(type => (
+            <option key={type} value={type}>
+              {type.charAt(0).toUpperCase() + type.slice(1)}
+            </option>
+          ))}
+        </select>
+      </div>
+
+                  {/* Filter by Resistance */}
+      <div className="filter-bar">
+        <label htmlFor="resistanceFilter">Filter by Resistance: </label>
+        <select 
+          id="resistanceFilter" 
+          value={selectedResistance} 
+          onChange={(e) => setSselectedResistance(e.target.value)}
+        >
+          <option value="all">All Resistances</option>
+          {allTypes.map(type => (
+            <option key={type} value={type}>
+              {type.charAt(0).toUpperCase() + type.slice(1)}
+            </option>
+          ))}
+        </select>
+      </div>
+      </div>      
       <div className="pokemon-grid">
         {pokemonList.map((pokemon) => (
           <div className="container pokemon-card" key={pokemon.name}>

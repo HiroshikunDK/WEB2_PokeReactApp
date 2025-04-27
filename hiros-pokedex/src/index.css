@@ -238,3 +238,10 @@ body {
   color: #3d7dca; /* Blue color */
   font-weight: bold;
 }
+
+.filter-container {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap; /* Optional: Wraps filters on small screens */
+  align-items: center;
+}
