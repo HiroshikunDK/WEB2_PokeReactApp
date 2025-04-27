@@ -1,6 +1,0 @@
-{
-  "dependencies": {
-    "gh-pages": "^6.3.0",
-    "pokeapi-sprites": "^2.0.4"
-  }
-}
